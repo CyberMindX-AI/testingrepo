@@ -14,7 +14,17 @@ export function Navbar() {
   }
 
   const pathname = usePathname()
-  const isWorkspace = pathname?.startsWith("/home-dashboard") ?? false
+  const isWorkspaceRoute = (p?: string | null) => {
+    if (!p) return false
+    return (
+      p.startsWith("/home-dashboard") ||
+      p.startsWith("/discover") ||
+      p.startsWith("/keywords") ||
+      p.startsWith("/ai-trend") ||
+      p.startsWith("/upgrade")
+    )
+  }
+  const isWorkspace = isWorkspaceRoute(pathname)
 
   const workspaceLinks = [
     { href: "/discover", label: "Discover" },
@@ -30,7 +40,7 @@ export function Navbar() {
     { href: "/contact", label: "Contact" },
   ]
 
-  const links = isWorkspace ? workspaceLinks : defaultLinks
+  const links = isWorkspace ? [...workspaceLinks, ...defaultLinks] : defaultLinks
   const linkBaseClass = isWorkspace
     ? "text-white hover:text-white/80 px-3 py-2 rounded-md text-sm font-medium"
     : "text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
@@ -58,7 +68,7 @@ export function Navbar() {
           {!isWorkspace && (
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
-              <Link href="/login">
+              <Link href="/auth/login">
                 <Button variant="outline" size="sm">
                   Login
                 </Button>
@@ -107,7 +117,7 @@ export function Navbar() {
                   <div className="flex justify-center pb-2">
                     <ThemeToggle />
                   </div>
-                  <Link href="/login">
+                  <Link href="/auth/login">
                     <Button variant="outline" size="sm" className="w-full">
                       Login
                     </Button>

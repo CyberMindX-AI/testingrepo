@@ -6,6 +6,8 @@ declare module 'next/navigation' {
     prefetch?: (href: string) => Promise<void>
     back: () => void
   }
+  // Server navigation helper
+  export function redirect(url: string): never
 }
 
 // Minimal JSX shim to avoid "JSX element implicitly has type 'any'" when next-env.d.ts is ignored.
