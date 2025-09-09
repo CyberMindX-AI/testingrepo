@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Gift } from "lucide-react"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 
@@ -43,7 +43,7 @@ export function Navbar() {
   const links = isWorkspace ? [...workspaceLinks, ...defaultLinks] : defaultLinks
   const linkBaseClass = isWorkspace
     ? "text-white hover:text-white/80 px-3 py-2 rounded-md text-sm font-medium"
-    : "text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+    : "text-gray-700 dark:text-white hover:text-blue-600 dark:hover:text-white/80 px-3 py-2 rounded-md text-sm font-medium"
 
   return (
     <nav className={`${isWorkspace ? "bg-gray-900 border-b border-gray-800" : "bg-white dark:bg-gray-900 border-b"} shadow-sm`}>
@@ -68,6 +68,11 @@ export function Navbar() {
           {!isWorkspace && (
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
+              <Link href="/donate">
+                <Button variant="outline" size="sm" className="rounded-full border-2">
+                  <Gift className="h-4 w-4 mr-2" /> Donate
+                </Button>
+              </Link>
               <Link href="/auth/login">
                 <Button variant="outline" size="sm">
                   Login
@@ -117,6 +122,11 @@ export function Navbar() {
                   <div className="flex justify-center pb-2">
                     <ThemeToggle />
                   </div>
+                  <Link href="/donate">
+                    <Button variant="outline" size="sm" className="w-full rounded-full border-2">
+                      <Gift className="h-4 w-4 mr-2" /> Donate
+                    </Button>
+                  </Link>
                   <Link href="/auth/login">
                     <Button variant="outline" size="sm" className="w-full">
                       Login
