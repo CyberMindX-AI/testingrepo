@@ -34,9 +34,8 @@ export default function LoginPage() {
         <div className="flex items-center justify-between w-full px-6 py-4 fixed top-0">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-lg">N</span>
             </div>
-            <span className="text-xl font-semibold">NexTrend</span>
+            <span className="text-xl font-semibold text-blue-500">NexTrend</span>
           </div>
           <div className="flex items-center gap-2">
             <a href="/auth/signup" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
