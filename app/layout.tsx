@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { ThemeProvider } from '@/components/theme-provider'
+import ChatbotWidget from '@/components/chatbot-widget'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -34,6 +35,8 @@ html {
           disableTransitionOnChange
         >
           {children}
+          {/* Global website chatbot */}
+          <ChatbotWidget />
         </ThemeProvider>
       </body>
     </html>
