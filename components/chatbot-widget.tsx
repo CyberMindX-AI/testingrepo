@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { HelpCircle, Send, MessageSquare, Bug, BookOpenText, PhoneCall, Sparkles } from "lucide-react"
+import { HelpCircle, Send, MessageCircle, Bug, BookOpenText, PhoneCall, Sparkles } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -94,7 +94,7 @@ export default function ChatbotWidget() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <MessageSquare className="h-5 w-5" />
+            <MessageCircle className="h-5 w-5" />
           </motion.button>
         </SheetTrigger>
         {/* Greeting nudge bubble */}
@@ -105,14 +105,17 @@ export default function ChatbotWidget() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.2 }}
-              className="absolute -top-12 right-0 max-w-[220px] rounded-lg bg-gray-900 text-white text-xs px-3 py-2 border border-gray-800 shadow-lg"
+              className="absolute -top-14 right-0 max-w-[260px] rounded-full bg-gray-900/95 backdrop-blur text-white text-xs px-3 py-2 border border-gray-800 shadow-lg"
             >
-              Hello! How may I help you today?
+              <span className="inline-flex items-center gap-2">
+                <MessageCircle className="h-3.5 w-3.5 text-blue-400 animate-pulse" />
+                <span className="whitespace-nowrap">Hello! How may I help you today?</span>
+              </span>
               <span className="absolute -bottom-1 right-4 w-2 h-2 bg-gray-900 rotate-45 border-r border-b border-gray-800"></span>
             </motion.div>
           )}
         </AnimatePresence>
-        <SheetContent side="right" className="p-0 bg-gray-900 text-white border-l border-gray-800 w-[380px] sm:w-[420px]">
+        <SheetContent side="right" className="p-0 bg-gray-900 text-white border-l border-gray-800 w-[320px] sm:w-[360px]">
           <SheetHeader className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between">
               <SheetTitle className="text-white">NexTrend Assistant</SheetTitle>
@@ -221,7 +224,7 @@ export default function ChatbotWidget() {
                     </div>
                     <Button
                       variant="outline"
-                      className="bg-gray-800 border-gray-700"
+                      className="bg-gray-800 border border-gray-500 text-gray-100 hover:bg-gray-800/80"
                       onClick={() => setShowBugForm(false)}
                     >
                       Cancel
