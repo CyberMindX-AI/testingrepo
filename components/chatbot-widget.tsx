@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { HelpCircle, Send, MessageSquare, Bug, BookOpenText, PhoneCall, Sparkles } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { motion, AnimatePresence } from "framer-motion"
@@ -24,6 +24,7 @@ export default function ChatbotWidget() {
   const [bugEmail, setBugEmail] = useState("")
   const [bugDesc, setBugDesc] = useState("")
   const [bugUrgent, setBugUrgent] = useState(false)
+  const [showNudge, setShowNudge] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -31,6 +32,16 @@ export default function ChatbotWidget() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
   }, [open, messages])
+
+  // Show a greeting nudge on every visit (each page load)
+  useEffect(() => {
+    const timer = setTimeout(() => setShowNudge(true), 1200)
+    const autoHide = setTimeout(() => setShowNudge(false), 8000)
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(autoHide)
+    }
+  }, [])
 
   const send = async (text: string, intent?: string) => {
     if (!text.trim()) return
@@ -69,20 +80,42 @@ export default function ChatbotWidget() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <Sheet
+        open={open}
+        onOpenChange={(v) => {
+          setOpen(v)
+          if (v) setShowNudge(false)
+        }}
+      >
+        <SheetTrigger asChild>
           <motion.button
-            className="h-12 px-4 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center"
-            whileHover={{ scale: 1.03 }}
+            aria-label="Open chat"
+            className="h-12 w-12 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <HelpCircle className="h-5 w-5 mr-2" /> Need help?
+            <MessageSquare className="h-5 w-5" />
           </motion.button>
-        </DialogTrigger>
-        <DialogContent className="max-w-lg p-0 overflow-hidden bg-gray-900 text-white border border-gray-800">
-          <DialogHeader className="px-4 pt-4 pb-2">
+        </SheetTrigger>
+        {/* Greeting nudge bubble */}
+        <AnimatePresence>
+          {showNudge && !open && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.2 }}
+              className="absolute -top-12 right-0 max-w-[220px] rounded-lg bg-gray-900 text-white text-xs px-3 py-2 border border-gray-800 shadow-lg"
+            >
+              Hello! How may I help you today?
+              <span className="absolute -bottom-1 right-4 w-2 h-2 bg-gray-900 rotate-45 border-r border-b border-gray-800"></span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <SheetContent side="right" className="p-0 bg-gray-900 text-white border-l border-gray-800 w-[380px] sm:w-[420px]">
+          <SheetHeader className="px-4 pt-4 pb-2">
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-white">NexTrend Assistant</DialogTitle>
+              <SheetTitle className="text-white">NexTrend Assistant</SheetTitle>
               <div className="flex items-center gap-2">
                 <a
                   href="/contact"
@@ -92,7 +125,7 @@ export default function ChatbotWidget() {
                 </a>
               </div>
             </div>
-          </DialogHeader>
+          </SheetHeader>
 
           {/* Quick intents */}
           <motion.div
@@ -258,8 +291,8 @@ export default function ChatbotWidget() {
               <Send className="h-4 w-4" />
             </Button>
           </form>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }

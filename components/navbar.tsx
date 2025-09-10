@@ -40,7 +40,7 @@ export function Navbar() {
     { href: "/contact", label: "Contact" },
   ]
 
-  const links = isWorkspace ? [...workspaceLinks, ...defaultLinks] : defaultLinks
+  const links = isWorkspace ? workspaceLinks : defaultLinks
   const linkBaseClass = isWorkspace
     ? "text-white hover:text-white/80 px-3 py-2 rounded-md text-sm font-medium"
     : "text-gray-700 dark:text-white hover:text-blue-600 dark:hover:text-white/80 px-3 py-2 rounded-md text-sm font-medium"
