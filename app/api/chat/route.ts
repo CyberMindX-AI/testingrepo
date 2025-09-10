@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+export const runtime = "nodejs"
 
 // Simple intent router
 function detectIntent(text: string, hint?: string) {

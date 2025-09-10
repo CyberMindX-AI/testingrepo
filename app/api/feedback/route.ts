@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import type { Transporter } from "nodemailer"
+export const runtime = "nodejs"
 
 // Lazy import nodemailer to avoid SSR issues if not installed yet
 async function getTransporter(): Promise<Transporter | null> {
